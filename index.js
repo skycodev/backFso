@@ -34,6 +34,7 @@ let persons = [
 //   next()
 // }
 // app.use(requestLogger)
+app.use(express.static('build'))
 app.use(cors())
 morgan.token('body', (req, res) => {
   return JSON.stringify(req.body)
