@@ -4,12 +4,12 @@ const password = process.argv[2]
 
 const url = `mongodb+srv://skyadmin:${password}@cluster0.t6lmx.mongodb.net/backtest?retryWrites=true&w=majority`
 
-const userSchema = new mongoose.Schema({
+const personSchema = new mongoose.Schema({
   name: String,
   number: String
 })
 
-const User = mongoose.model('User', userSchema)
+const Person = mongoose.model('Person', personSchema)
 
 mongoose
   .connect(url)
@@ -21,21 +21,21 @@ if (process.argv.length < 3) {
   console.log('Please provide the password as an argument: node mongo.js <password>')
   process.exit(1)
 } else if (process.argv.length === 3) {
-  User.find({}).then(result => {
-    result.forEach(user => {
-      console.log(`${user.name} ${user.number} \n`)
+  Person.find({}).then(result => {
+    result.forEach(person => {
+      console.log(`${person.name} ${person.number} \n`)
     })
     mongoose.connection.close()
     process.exit(1)
   })
 } else if (process.argv.length === 5) {
-  const user = new User({
+  const person = new Person({
     name: process.argv[3],
     number: process.argv[4]
   })
 
-  user.save().then(result => {
-    console.log(`added ${user.name} number ${user.number} to phonebook`)
+  person.save().then(result => {
+    console.log(`added ${person.name} number ${person.number} to phonebook`)
     mongoose.connection.close()
   })
 
